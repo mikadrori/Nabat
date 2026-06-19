@@ -120,7 +120,7 @@ export function CartDrawer() {
 
           <div className="mb-4 flex justify-between text-lg">
             <span>סה״כ</span>
-            <span className="font-medium">{formatPrice(subtotal)}</span>
+            <span className="font-book">{formatPrice(subtotal)}</span>
           </div>
 
           <button

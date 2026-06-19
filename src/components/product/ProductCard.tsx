@@ -31,7 +31,7 @@ export function ProductCard({ product, showAddToCart = true }: ProductCardProps)
           )}
           <h3
             className={cn(
-              'absolute top-10 z-10 w-full text-center font-display text-[3rem] font-bold leading-none tracking-wide',
+              'absolute top-[12%] z-10 w-full text-center font-display text-[3rem] leading-none',
               accentTextClass[product.accentColor],
             )}
           >
@@ -44,11 +44,11 @@ export function ProductCard({ product, showAddToCart = true }: ProductCardProps)
           />
         </div>
       </Link>
-      <p className="font-display text-[1.5rem] text-text-brown">{product.tagline}</p>
+      <p className="font-book text-[1.5rem] text-text-brown">{product.tagline}</p>
       {product.flavorLabel && (
-        <p className="mt-1 text-[1.125rem] text-text-brown">{product.flavorLabel}</p>
+        <p className="mt-1 font-book text-[1.375rem] text-text-brown">{product.flavorLabel}</p>
       )}
-      <p className="mt-2 text-[1.125rem] font-medium text-text-brown">{formatPrice(product.price)}</p>
+      <p className="mt-2 font-book text-[1.375rem] text-text-brown">{formatPrice(product.price)}</p>
       <div className="mt-4 flex flex-wrap justify-center gap-3">
         <Link
           to={`/products/${product.slug}`}

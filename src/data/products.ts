@@ -5,6 +5,9 @@ import {
   orangeCrystalBg,
   greenCrystalBg,
   pinkCrystalBg,
+  orangeBg,
+  greenBg,
+  pinkBg,
 } from '../assets/svg'
 
 export type ProductCategory = 'candy' | 'mug' | 'bag'
@@ -33,19 +36,19 @@ const placeholder = (label: string, color: string) =>
 
 export const products: Product[] = [
   {
-    id: 'candy-saffron',
-    slug: 'saffron',
-    name: 'זעפרן',
+    id: 'candy-rose',
+    slug: 'rose-water',
+    name: 'מי ורדים',
     category: 'candy',
     tagline: 'סוכריות נבט',
     description:
-      'סוכריות נבט בטעם זעפרן — מתיקות טבעית עם ניחוח עדין של זעפרן אמיתי, בלי תמציות מלאכותיות.',
-    price: 49.9,
-    accentColor: 'saffron',
-    flavorLabel: 'בטעם זעפרן',
-    image: productSaffron,
-    crystalBg: orangeCrystalBg,
-    features: ['זעפרן אמיתי', 'קריסטלים טבעיים', 'ללא תמציות מלאכותיות'],
+      'סוכריות נבט בטעם מי ורדים — מתיקות עדינה עם ניחוח פרחוני של מי ורדים אמיתיים.',
+    price: 44.9,
+    accentColor: 'rose',
+    flavorLabel: 'בטעם מי ורדים',
+    image: productRose,
+    crystalBg: pinkCrystalBg,
+    features: ['מי ורדים אמיתיים', 'קריסטלים שלמים', 'מתאים לקפה ותה'],
   },
   {
     id: 'candy-natural',
@@ -63,19 +66,19 @@ export const products: Product[] = [
     features: ['חומר גלם יחיד', 'תהליך איטי וטבעי', 'ללא קיצורי דרך'],
   },
   {
-    id: 'candy-rose',
-    slug: 'rose-water',
-    name: 'מי ורדים',
+    id: 'candy-saffron',
+    slug: 'saffron',
+    name: 'זעפרן',
     category: 'candy',
     tagline: 'סוכריות נבט',
     description:
-      'סוכריות נבט בטעם מי ורדים — מתיקות עדינה עם ניחוח פרחוני של מי ורדים אמיתיים.',
-    price: 44.9,
-    accentColor: 'rose',
-    flavorLabel: 'בטעם מי ורדים',
-    image: productRose,
-    crystalBg: pinkCrystalBg,
-    features: ['מי ורדים אמיתיים', 'קריסטלים שלמים', 'מתאים לקפה ותה'],
+      'סוכריות נבט בטעם זעפרן — מתיקות טבעית עם ניחוח עדין של זעפרן אמיתי, בלי תמציות מלאכותיות.',
+    price: 49.9,
+    accentColor: 'saffron',
+    flavorLabel: 'בטעם זעפרן',
+    image: productSaffron,
+    crystalBg: orangeCrystalBg,
+    features: ['זעפרן אמיתי', 'קריסטלים טבעיים', 'ללא תמציות מלאכותיות'],
   },
   {
     id: 'mug-saffron',
@@ -167,8 +170,8 @@ export const accentTextClass: Record<AccentColor, string> = {
   rose: 'text-rose',
 }
 
-export const accentBgClass: Record<AccentColor, string> = {
-  saffron: 'bg-saffron-band',
-  natural: 'bg-natural-band',
-  rose: 'bg-rose-band',
+export const accentBgImage: Record<AccentColor, string> = {
+  saffron: orangeBg,
+  natural: greenBg,
+  rose: pinkBg,
 }

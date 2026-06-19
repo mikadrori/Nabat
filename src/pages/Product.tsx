@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { orangeBg } from '../assets/svg'
+import { PageContainer } from '../components/layout/PageContainer'
+import { PageGrid } from '../components/layout/PageGrid'
 import { StorySection } from '../components/product/StorySection'
 import { useCart } from '../context/CartContext'
 import {
-  accentBgClass,
+  accentBgImage,
   accentTextClass,
   getProductBySlug,
   products,
@@ -26,16 +29,17 @@ export function Product() {
 
   return (
     <>
-      <section className="sticky top-[82px] z-30 border-b border-cream-dark bg-cream/95 px-6 py-6 backdrop-blur md:px-12">
-        <div className="mx-auto grid max-w-[1280px] gap-10 md:grid-cols-2">
-          <div className="flex items-center justify-center bg-cream-dark/40 p-8">
-            <img src={product.image} alt={product.name} className="max-h-[420px] object-contain" />
-          </div>
-          <div className="flex flex-col justify-center">
-            <p className="text-sm uppercase tracking-widest text-text-brown/60">{product.tagline}</p>
+      <section className="sticky top-[82px] z-30 border-b border-cream-dark bg-cream/95 py-6 backdrop-blur">
+        <PageContainer>
+          <PageGrid className="gap-y-10">
+            <div className="col-span-6 flex items-center justify-center bg-cream-dark/40 p-8 md:col-span-3 md:col-start-1">
+              <img src={product.image} alt={product.name} className="max-h-[420px] object-contain" />
+            </div>
+            <div className="col-span-6 flex flex-col justify-center md:col-span-3 md:col-start-4">
+            <p className="text-[1.25rem] text-text-brown/60">{product.tagline}</p>
             <h1
               className={cn(
-                'font-display mt-2 text-[clamp(2.5rem,5vw,4rem)] font-bold',
+                'font-display mt-2 text-[clamp(2.5rem,5vw,4rem)]',
                 accentTextClass[product.accentColor],
               )}
             >
@@ -79,36 +83,49 @@ export function Product() {
                 הוסף לסל
               </button>
             </div>
-          </div>
-        </div>
+            </div>
+          </PageGrid>
+        </PageContainer>
       </section>
 
       {product.category === 'candy' && (
-        <section className="px-6 py-16 md:px-12">
-          <div className="mx-auto max-w-[1280px]">
-            <h2 className="font-display mb-10 text-[clamp(2rem,4vw,3rem)]">סוכר אחד, שלוש חוויות</h2>
-            <div className="grid gap-8 md:grid-cols-3">
+        <section className="py-16">
+          <PageContainer>
+            <PageGrid className="mb-10">
+              <h2 className="font-display col-span-6 text-[clamp(2rem,4vw,3rem)]">
+                סוכר אחד, שלוש חוויות
+              </h2>
+            </PageGrid>
+            <PageGrid>
               {candyProducts.map((candy) => (
+                <div key={candy.id} className="col-span-6 md:col-span-2">
                 <Link
-                  key={candy.id}
                   to={`/products/${candy.slug}`}
                   className={cn(
-                    'rounded-3xl p-8 text-cream transition-transform hover:scale-[1.02]',
-                    accentBgClass[candy.accentColor],
-                    candy.slug === product.slug && 'ring-4 ring-cream',
+                    'relative block overflow-hidden transition-transform hover:scale-[1.02]',
+                    candy.slug === product.slug && 'ring-4 ring-cream ring-offset-2 ring-offset-cream',
                   )}
                 >
-                  <h3 className="font-display text-3xl font-bold">{candy.name}</h3>
-                  <p className="mt-2 opacity-90">{candy.flavorLabel}</p>
-                  <p className="mt-4 text-xl">{formatPrice(candy.price)}</p>
+                  <img
+                    src={accentBgImage[candy.accentColor]}
+                    alt=""
+                    className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+                    aria-hidden="true"
+                  />
+                  <div className="relative z-10 p-8 text-cream">
+                    <h3 className="font-display text-3xl">{candy.name}</h3>
+                    <p className="mt-2 font-book opacity-90">{candy.flavorLabel}</p>
+                    <p className="mt-4 font-book text-xl">{formatPrice(candy.price)}</p>
+                  </div>
                 </Link>
+                </div>
               ))}
-            </div>
-          </div>
+            </PageGrid>
+          </PageContainer>
         </section>
       )}
 
-      <StorySection title="למה נבט?" bgClass="bg-saffron-band">
+      <StorySection title="למה נבט?" bgImage={orangeBg}>
         <p>
           למדנו לפחד מסוכר כאילו הוא האויב. החלטנו להפסיק להילחם בגוף ולייצר סוכרייה שמחזירה את
           המתיקות לשגרה, בלי רגשות אשם.
@@ -116,36 +133,39 @@ export function Product() {
       </StorySection>
 
       {related.length > 0 && (
-        <section className="px-6 py-16 md:px-12">
-          <div className="mx-auto max-w-[1280px]">
-            <h2 className="font-display mb-8 text-3xl">השלימו את הסט</h2>
-            <div className="grid gap-6 sm:grid-cols-2">
+        <section className="py-16">
+          <PageContainer>
+            <PageGrid className="mb-8">
+              <h2 className="font-display col-span-6 text-3xl">השלימו את הסט</h2>
+            </PageGrid>
+            <PageGrid>
               {related.map((item) => (
+                <div key={item.id} className="col-span-6 sm:col-span-3">
                 <Link
-                  key={item.id}
                   to={`/products/${item.slug}`}
                   className="flex items-center gap-4 rounded-2xl bg-cream-dark/50 p-4 transition-colors hover:bg-cream-dark"
                 >
                   <img src={item.image} alt={item.name} className="h-24 w-20 object-contain" />
                   <div>
                     <p className="font-display text-xl">{item.name}</p>
-                    <p className="text-text-brown/70">{formatPrice(item.price)}</p>
+                    <p className="font-book text-text-brown/70">{formatPrice(item.price)}</p>
                   </div>
                 </Link>
+                </div>
               ))}
-            </div>
-          </div>
+            </PageGrid>
+          </PageContainer>
         </section>
       )}
 
-      <section className="border-t border-cream-dark px-6 py-12 md:px-12">
-        <div className="mx-auto max-w-[1280px] text-center">
-          <p className="font-display text-2xl">★★★★★ 4.9</p>
+      <section className="border-t border-cream-dark py-12">
+        <PageContainer className="text-center">
+          <p className="font-book text-2xl">★★★★★ 4.9</p>
           <p className="mt-2 text-text-brown/70">מבוסס על 128 ביקורות</p>
           <blockquote className="mx-auto mt-8 max-w-xl text-lg italic text-text-brown/80">
             "סוף סוף מתיקות שמרגישה נקייה. הזעפרן בקפה — חוויה שלמה."
           </blockquote>
-        </div>
+        </PageContainer>
       </section>
     </>
   )

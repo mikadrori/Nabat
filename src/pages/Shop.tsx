@@ -1,5 +1,9 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { darkCreamBg } from '../assets/svg'
+import { BandSection } from '../components/layout/BandSection'
+import { PageContainer } from '../components/layout/PageContainer'
+import { PageGrid } from '../components/layout/PageGrid'
 import { ProductCard } from '../components/product/ProductCard'
 import { getProductsByCategory, type ProductCategory } from '../data/products'
 import { cn } from '../lib/cn'
@@ -30,11 +34,13 @@ export function Shop() {
   }, [activeFilter])
 
   return (
-    <section className="px-6 py-16 md:px-12 md:py-20">
-      <div className="mx-auto max-w-[1280px]">
-        <h1 className="font-display mb-10 text-[clamp(2.5rem,5vw,4rem)] text-text-brown">
-          כל המוצרים
-        </h1>
+    <BandSection bgImage={darkCreamBg} className="py-16 md:py-20">
+      <PageContainer>
+        <PageGrid className="mb-10">
+          <h1 className="font-display col-span-6 text-[clamp(2.5rem,5vw,4rem)] text-text-brown">
+            כל המוצרים
+          </h1>
+        </PageGrid>
 
         <div className="mb-12 flex flex-wrap gap-3">
           {filters.map((filter) => (
@@ -57,12 +63,14 @@ export function Shop() {
           ))}
         </div>
 
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+        <PageGrid>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div key={product.id} className="col-span-6 sm:col-span-3 lg:col-span-2">
+              <ProductCard product={product} />
+            </div>
           ))}
-        </div>
-      </div>
-    </section>
+        </PageGrid>
+      </PageContainer>
+    </BandSection>
   )
 }

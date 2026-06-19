@@ -1,91 +1,70 @@
 import { Link } from 'react-router-dom'
 import {
+  darkCreamBg,
   greenBg,
-  greenCrystalPart,
+  heroImage,
   nabatImage,
   orangeBg,
-  orangeCrystalPart,
   pinkBg,
-  pinkCrystalPart,
 } from '../assets/svg'
+import { BandSection } from '../components/layout/BandSection'
+import { PageContainer } from '../components/layout/PageContainer'
+import { PageGrid } from '../components/layout/PageGrid'
 import { ProductCard } from '../components/product/ProductCard'
 import { StorySection } from '../components/product/StorySection'
 import { getProductsByCategory } from '../data/products'
-import jarImage from '../assets/figma/jar.png'
 
 export function Home() {
   const candies = getProductsByCategory('candy')
 
   return (
     <>
-      <section className="relative overflow-hidden bg-cream px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-16">
-        <div className="mx-auto grid max-w-[1280px] items-center gap-10 md:grid-cols-2">
-          <div className="order-2 md:order-1">
-            <h1 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.85] tracking-wide text-cream-dark">
-              כמו
-              <br />
-              שהטבע התכוון
-            </h1>
-          </div>
-          <div className="relative order-1 flex min-h-[420px] justify-center md:order-2">
-            <img
-              src={orangeCrystalPart}
-              alt=""
-              className="pointer-events-none absolute right-0 top-4 w-[38%] max-w-[220px] rotate-[132deg]"
-              aria-hidden="true"
-            />
-            <img
-              src={pinkCrystalPart}
-              alt=""
-              className="pointer-events-none absolute left-[8%] top-[28%] w-[28%] max-w-[180px] rotate-[74deg]"
-              aria-hidden="true"
-            />
-            <img
-              src={greenCrystalPart}
-              alt=""
-              className="pointer-events-none absolute bottom-[12%] right-[18%] w-[32%] max-w-[200px] -rotate-12"
-              aria-hidden="true"
-            />
-            <img
-              src={jarImage}
-              alt="צנצנת סוכר נבט"
-              className="relative z-10 max-h-[420px] w-auto object-contain"
-            />
-          </div>
-        </div>
+      <section className="relative overflow-hidden bg-cream py-12 md:py-20">
+        <PageContainer>
+          <PageGrid className="items-center gap-y-10">
+            <div className="col-span-6 flex justify-center md:col-span-3 md:col-start-1 md:justify-end">
+              <img
+                src={heroImage}
+                alt="צנצנת סוכר נבט עם גבישים"
+                className="w-full max-w-[493px] object-contain"
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3 md:col-start-4">
+              <h1 className="font-display text-left text-[clamp(3rem,9.375vw,7.5rem)] leading-[0.85] text-cream-dark">
+                כמו
+                <br />
+                שהטבע התכוון
+              </h1>
+            </div>
+          </PageGrid>
+        </PageContainer>
       </section>
 
-      <div
-        className="h-6 bg-cream-dark"
-        style={{ clipPath: 'ellipse(55% 100% at 50% 100%)' }}
-      />
-
-      <section className="bg-cream-dark px-6 py-16 md:px-12 md:py-24">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] text-text-brown">סוכריות נבט</h2>
+      <BandSection bgImage={darkCreamBg} className="py-14 md:py-20">
+        <PageContainer>
+          <PageGrid className="mb-10 items-end gap-y-4">
+            <h2 className="font-display col-span-6 text-[clamp(2rem,3.75vw,3rem)] text-text-brown md:col-span-3 md:col-start-1">
+              סוכריות נבט
+            </h2>
             <Link
               to="/shop?category=candy"
-              className="text-lg text-text-brown underline underline-offset-4 hover:opacity-80"
+              className="col-span-6 text-left text-[1.25rem] text-text-brown underline underline-offset-4 hover:opacity-80 md:col-span-3 md:col-start-4"
             >
               לכל המוצרים ←
             </Link>
-          </div>
-          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          </PageGrid>
+          <PageGrid>
             {candies.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div key={product.id} className="col-span-6 sm:col-span-3 lg:col-span-2">
+                <ProductCard product={product} />
+              </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <div
-        className="h-6 bg-cream"
-        style={{ clipPath: 'ellipse(55% 100% at 50% 0%)' }}
-      />
+          </PageGrid>
+        </PageContainer>
+      </BandSection>
 
       <StorySection id="story" title="למה נבט?" bgImage={orangeBg} align="right">
-        <p className="font-medium text-[1.375rem]">למדנו לפחד מסוכר כאילו הוא האויב.</p>
+        <p>למדנו לפחד מסוכר כאילו הוא האויב.</p>
         <p>
           אבל הגוף שלנו בסך הכל צריך את האנרגיה הזאת, והבעיה היא העיבוד התעשייתי — לא המתיקות.
           החלטנו להפסיק להילחם בגוף ולייצר סוכרייה שעושה בדיוק את ההפך — מחזירה את המתיקות לשגרה,
@@ -94,7 +73,7 @@ export function Home() {
       </StorySection>
 
       <StorySection title="אז מה עשינו?" bgImage={greenBg} align="right">
-        <p className="font-medium text-[1.375rem]">חזרנו למקור.</p>
+        <p>חזרנו למקור.</p>
         <p>
           יצרנו חלופה נקייה ומזמינה המבוססת על חומר גלם יחיד וטהור. בלי רשימות רכיבים ארוכות
           ובלי פשרות, רק אנרגיה מדויקת שפועלת בהרמוניה מוחלטת עם הגוף שלכם.
@@ -102,7 +81,7 @@ export function Home() {
       </StorySection>
 
       <StorySection title="איך אנחנו עושים את זה?" bgImage={pinkBg} align="right">
-        <p className="font-medium text-[1.375rem]">בלי קיצורי דרך.</p>
+        <p>בלי קיצורי דרך.</p>
         <p>
           אנחנו מפיקים את הסוכר מקני סוכר ומעבירים אותו סינון קפדני שמסיר משקעים ומותיר רק מהות
           צלולה וטהורה. במקום תיעוש אגרסיבי, הנוזל מתגבש לאט בתהליך טבעי ואיטי עד לקבלת קריסטל
@@ -111,20 +90,22 @@ export function Home() {
         </p>
       </StorySection>
 
-      <section className="bg-cream px-6 py-20 md:px-12 md:py-28">
-        <div className="mx-auto grid max-w-[1280px] items-center gap-10 md:grid-cols-2">
-          <h2 className="font-display text-[clamp(2rem,5vw,4.375rem)] leading-tight tracking-wide text-cream-dark">
-            תנו לעצמכם לשחרר לרגע, לנשום, ולהנות מחדש ממתיקות אבל הפעם — בלי רגשות אשם.
-          </h2>
-          <div className="relative flex justify-center">
-            <img
-              src={nabatImage}
-              alt=""
-              className="max-h-[320px] w-full max-w-md object-contain"
-              aria-hidden="true"
-            />
-          </div>
-        </div>
+      <section className="bg-cream py-16 md:py-24">
+        <PageContainer>
+          <PageGrid className="items-center gap-y-10">
+            <div className="col-span-6 flex justify-center md:col-span-3 md:col-start-1 md:justify-end">
+              <img
+                src={nabatImage}
+                alt=""
+                className="max-h-[320px] w-full max-w-md object-contain"
+                aria-hidden="true"
+              />
+            </div>
+            <h2 className="font-display col-span-6 text-left text-[clamp(2rem,5.46875vw,4.375rem)] leading-[1.1] text-cream-dark md:col-span-3 md:col-start-4">
+              תנו לעצמכם לשחרר לרגע, לנשום, ולהנות מחדש ממתיקות אבל הפעם — בלי רגשות אשם.
+            </h2>
+          </PageGrid>
+        </PageContainer>
       </section>
     </>
   )

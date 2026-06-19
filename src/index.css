@@ -14,6 +14,10 @@
   --color-nav-green: #8fa68a;
   --color-nav-text: #fcf7ee;
   --font-serif: "Fedra Serif H+L", Georgia, "Times New Roman", serif;
+  --grid-max-width: 1280px;
+  --grid-margin: 50px;
+  --grid-gutter: 20px;
+  --grid-columns: 6;
 }
 
 * {
@@ -32,7 +36,6 @@ body {
   font-family: var(--font-serif);
   font-weight: 400;
   font-style: italic;
-  font-synthesis: style;
 }
 
 #root {
@@ -41,10 +44,17 @@ body {
 
 .font-display {
   font-family: var(--font-serif);
+  font-weight: 500;
   font-style: italic;
 }
 
-.font-body {
-  font-family: var(--font-serif);
+/* Fedra Serif H+L italic weights — match Figma text styles */
+.font-book {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.font-medium-weight {
+  font-weight: 500;
   font-style: italic;
 }
