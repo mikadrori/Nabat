@@ -1,9 +1,11 @@
 import productSaffron from '../assets/figma/product-saffron-box.png'
 import productNatural from '../assets/figma/product-natural-box.png'
 import productRose from '../assets/figma/product-rose-box.png'
-import cardSaffron from '../assets/figma/group-saffron.png'
-import cardNatural from '../assets/figma/group-natural.png'
-import cardRose from '../assets/figma/group-rose.png'
+import {
+  orangeCrystalBg,
+  greenCrystalBg,
+  pinkCrystalBg,
+} from '../assets/svg'
 
 export type ProductCategory = 'candy' | 'mug' | 'bag'
 
@@ -20,7 +22,7 @@ export interface Product {
   accentColor: AccentColor
   flavorLabel?: string
   image: string
-  cardImage?: string
+  crystalBg?: string
   features: string[]
 }
 
@@ -42,7 +44,7 @@ export const products: Product[] = [
     accentColor: 'saffron',
     flavorLabel: 'בטעם זעפרן',
     image: productSaffron,
-    cardImage: cardSaffron,
+    crystalBg: orangeCrystalBg,
     features: ['זעפרן אמיתי', 'קריסטלים טבעיים', 'ללא תמציות מלאכותיות'],
   },
   {
@@ -57,7 +59,7 @@ export const products: Product[] = [
     accentColor: 'natural',
     flavorLabel: 'בטעם טבעי',
     image: productNatural,
-    cardImage: cardNatural,
+    crystalBg: greenCrystalBg,
     features: ['חומר גלם יחיד', 'תהליך איטי וטבעי', 'ללא קיצורי דרך'],
   },
   {
@@ -72,7 +74,7 @@ export const products: Product[] = [
     accentColor: 'rose',
     flavorLabel: 'בטעם מי ורדים',
     image: productRose,
-    cardImage: cardRose,
+    crystalBg: pinkCrystalBg,
     features: ['מי ורדים אמיתיים', 'קריסטלים שלמים', 'מתאים לקפה ותה'],
   },
   {

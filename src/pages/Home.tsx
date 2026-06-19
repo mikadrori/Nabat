@@ -1,4 +1,13 @@
 import { Link } from 'react-router-dom'
+import {
+  greenBg,
+  greenCrystalPart,
+  nabatImage,
+  orangeBg,
+  orangeCrystalPart,
+  pinkBg,
+  pinkCrystalPart,
+} from '../assets/svg'
 import { ProductCard } from '../components/product/ProductCard'
 import { StorySection } from '../components/product/StorySection'
 import { getProductsByCategory } from '../data/products'
@@ -18,10 +27,25 @@ export function Home() {
               שהטבע התכוון
             </h1>
           </div>
-          <div className="relative order-1 flex justify-center md:order-2">
-            <div className="absolute -right-4 top-8 h-32 w-32 rotate-[132deg] rounded-full bg-saffron/30 blur-2xl" />
-            <div className="absolute bottom-8 left-0 h-28 w-28 rotate-[74deg] rounded-full bg-rose/30 blur-2xl" />
-            <div className="absolute right-12 top-1/2 h-24 w-24 -rotate-12 rounded-full bg-natural/30 blur-2xl" />
+          <div className="relative order-1 flex min-h-[420px] justify-center md:order-2">
+            <img
+              src={orangeCrystalPart}
+              alt=""
+              className="pointer-events-none absolute right-0 top-4 w-[38%] max-w-[220px] rotate-[132deg]"
+              aria-hidden="true"
+            />
+            <img
+              src={pinkCrystalPart}
+              alt=""
+              className="pointer-events-none absolute left-[8%] top-[28%] w-[28%] max-w-[180px] rotate-[74deg]"
+              aria-hidden="true"
+            />
+            <img
+              src={greenCrystalPart}
+              alt=""
+              className="pointer-events-none absolute bottom-[12%] right-[18%] w-[32%] max-w-[200px] -rotate-12"
+              aria-hidden="true"
+            />
             <img
               src={jarImage}
               alt="צנצנת סוכר נבט"
@@ -60,7 +84,7 @@ export function Home() {
         style={{ clipPath: 'ellipse(55% 100% at 50% 0%)' }}
       />
 
-      <StorySection id="story" title="למה נבט?" bgClass="bg-saffron-band" align="right">
+      <StorySection id="story" title="למה נבט?" bgImage={orangeBg} align="right">
         <p className="font-medium text-[1.375rem]">למדנו לפחד מסוכר כאילו הוא האויב.</p>
         <p>
           אבל הגוף שלנו בסך הכל צריך את האנרגיה הזאת, והבעיה היא העיבוד התעשייתי — לא המתיקות.
@@ -69,7 +93,7 @@ export function Home() {
         </p>
       </StorySection>
 
-      <StorySection title="אז מה עשינו?" bgClass="bg-natural-band" align="right">
+      <StorySection title="אז מה עשינו?" bgImage={greenBg} align="right">
         <p className="font-medium text-[1.375rem]">חזרנו למקור.</p>
         <p>
           יצרנו חלופה נקייה ומזמינה המבוססת על חומר גלם יחיד וטהור. בלי רשימות רכיבים ארוכות
@@ -77,7 +101,7 @@ export function Home() {
         </p>
       </StorySection>
 
-      <StorySection title="איך אנחנו עושים את זה?" bgClass="bg-rose-band" align="right">
+      <StorySection title="איך אנחנו עושים את זה?" bgImage={pinkBg} align="right">
         <p className="font-medium text-[1.375rem]">בלי קיצורי דרך.</p>
         <p>
           אנחנו מפיקים את הסוכר מקני סוכר ומעבירים אותו סינון קפדני שמסיר משקעים ומותיר רק מהות
@@ -92,8 +116,13 @@ export function Home() {
           <h2 className="font-display text-[clamp(2rem,5vw,4.375rem)] leading-tight tracking-wide text-cream-dark">
             תנו לעצמכם לשחרר לרגע, לנשום, ולהנות מחדש ממתיקות אבל הפעם — בלי רגשות אשם.
           </h2>
-          <div className="flex justify-center">
-            <img src={jarImage} alt="" className="max-h-[280px] object-contain opacity-90" />
+          <div className="relative flex justify-center">
+            <img
+              src={nabatImage}
+              alt=""
+              className="max-h-[320px] w-full max-w-md object-contain"
+              aria-hidden="true"
+            />
           </div>
         </div>
       </section>

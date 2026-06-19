@@ -13,7 +13,6 @@ interface ProductCardProps {
 
 export function ProductCard({ product, showAddToCart = true }: ProductCardProps) {
   const { addItem } = useCart()
-  const visual = product.cardImage ?? product.image
 
   return (
     <article className="flex flex-col items-center text-center">
@@ -21,19 +20,27 @@ export function ProductCard({ product, showAddToCart = true }: ProductCardProps)
         to={`/products/${product.slug}`}
         className="group relative mb-4 block w-full max-w-[280px]"
       >
-        <div className="relative mx-auto flex min-h-[360px] w-full flex-col items-center">
+        <div className="relative mx-auto flex min-h-[360px] w-full flex-col items-center justify-center pt-8">
+          {product.crystalBg && (
+            <img
+              src={product.crystalBg}
+              alt=""
+              className="pointer-events-none absolute top-0 left-1/2 w-[92%] max-w-[274px] -translate-x-1/2"
+              aria-hidden="true"
+            />
+          )}
           <h3
             className={cn(
-              'absolute top-8 z-10 w-full text-center font-display text-[3rem] font-bold leading-none tracking-wide',
+              'absolute top-10 z-10 w-full text-center font-display text-[3rem] font-bold leading-none tracking-wide',
               accentTextClass[product.accentColor],
             )}
           >
             {product.name}
           </h3>
           <img
-            src={visual}
+            src={product.image}
             alt={product.name}
-            className="w-full object-contain transition-transform group-hover:scale-[1.02]"
+            className="relative z-10 mt-16 h-[228px] w-[171px] object-contain transition-transform group-hover:scale-[1.02]"
           />
         </div>
       </Link>

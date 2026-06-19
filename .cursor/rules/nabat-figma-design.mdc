@@ -1,0 +1,44 @@
+---
+description: Nabat brand source of truth — Figma design, assets, and implementation conventions
+globs:
+alwaysApply: true
+---
+
+# Nabat project — design source of truth
+
+## Figma file
+
+- **URL:** https://www.figma.com/design/0F0MpE/phanikTZjANEDqdtwYj/Nabat?node-id=0-1&p=f
+- **fileKey:** `0F0MpE/phanikTZjANEDqdtwYj`
+- **Home page frame:** node `1:2` (Desktop, 1280×3521)
+- **Nav:** node `10:89`
+- **Product grid:** node `9:68`
+
+When implementing or updating UI, use the **Figma MCP plugin** (`get_design_context`, `get_screenshot`, `download_assets`) against these nodes. Adapt output to this codebase — do not paste absolute-positioned generated code verbatim.
+
+## Brand assets
+
+Official SVG exports live in [`src/assets/svg/`](src/assets/svg/). Prefer these over Figma MCP temp URLs.
+
+| File | Use |
+|------|-----|
+| `logo.svg` | Crystal mark (header) |
+| `logotype.svg` | Wordmark נבט (header → home) |
+| `*-crystal-part.svg` | Hero / closing decorations |
+| `*-crystal-bg.svg` | Product card shapes |
+| `*-bg.svg` | Story section bands (wavy) |
+| `nabat-image.svg` | Closing section cluster |
+
+Product photography (PNG) remains in `src/assets/figma/` until replaced.
+
+## Site conventions
+
+- **Language:** Hebrew, RTL (`dir="rtl"`, `lang="he"`)
+- **Font:** Fedra Serif H+L (`src/assets/fonts/`), fallback via `src/styles/fonts.css`
+- **Colors:** tokens in `src/index.css` (`cream`, `saffron`, `natural`, `rose`, etc.)
+- **נבט logotype + logo** → `/` (home)
+- **Cart:** icon button in header, drawer overlay (not a route)
+
+## Stack
+
+Vite + React + TypeScript + Tailwind CSS + React Router. Mock cart/checkout only — no real payments.
