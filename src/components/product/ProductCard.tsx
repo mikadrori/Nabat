@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import jarImage from '../../assets/jar image.png'
 import { useCart } from '../../context/CartContext'
 import {
   accentTextClass,
@@ -9,9 +10,15 @@ import { cn, formatPrice } from '../../lib/cn'
 interface ProductCardProps {
   product: Product
   showAddToCart?: boolean
+  variant?: 'default' | 'minimal'
 }
 
-export function ProductCard({ product, showAddToCart = true }: ProductCardProps) {
+export function ProductCard({
+  product,
+  showAddToCart = true,
+  variant = 'default',
+}: ProductCardProps) {
+  const minimal = variant === 'minimal'
   const { addItem } = useCart()
 
   return (
@@ -37,35 +44,69 @@ export function ProductCard({ product, showAddToCart = true }: ProductCardProps)
           >
             {product.name}
           </h3>
-          <img
-            src={product.image}
-            alt={product.name}
-            className="relative z-10 mt-16 h-[228px] w-[171px] object-contain transition-transform group-hover:scale-[1.02]"
-          />
+          {minimal ? (
+            <div className="relative z-10 mt-16 h-[228px] w-[171px] transition-transform duration-500 ease-in-out group-hover:-translate-y-6 group-hover:scale-[1.15]">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ease-in-out group-hover:opacity-0"
+              />
+              <img
+                src={jarImage}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+              />
+            </div>
+          ) : (
+            <img
+              src={product.image}
+              alt={product.name}
+              className="relative z-10 mt-16 h-[228px] w-[171px] object-contain transition-transform group-hover:scale-[1.02]"
+            />
+          )}
         </div>
       </Link>
-      <p className="font-book text-[1.5rem] text-text-brown">{product.tagline}</p>
-      {product.flavorLabel && (
-        <p className="mt-1 font-book text-[1.375rem] text-text-brown">{product.flavorLabel}</p>
-      )}
-      <p className="mt-2 font-book text-[1.375rem] text-text-brown">{formatPrice(product.price)}</p>
-      <div className="mt-4 flex flex-wrap justify-center gap-3">
-        <Link
-          to={`/products/${product.slug}`}
-          className="rounded-full border border-text-brown/30 px-5 py-2 text-sm transition-colors hover:bg-cream-dark"
-        >
-          לפרטים
-        </Link>
-        {showAddToCart && (
-          <button
-            type="button"
-            onClick={() => addItem(product)}
-            className="rounded-full bg-text-brown px-5 py-2 text-sm text-cream transition-opacity hover:opacity-90"
-          >
-            הוסף לסל
-          </button>
+      <p
+        className={cn(
+          'text-[1.5rem] text-text-brown',
+          minimal ? 'font-medium-weight' : 'font-book',
         )}
-      </div>
+      >
+        {product.tagline}
+      </p>
+      {product.flavorLabel && (
+        <p
+          className={cn(
+            'mt-1 font-book text-text-brown',
+            minimal ? 'text-[1.125rem]' : 'text-[1.375rem]',
+          )}
+        >
+          {product.flavorLabel}
+        </p>
+      )}
+      {!minimal && (
+        <>
+          <p className="mt-2 font-book text-[1.375rem] text-text-brown">{formatPrice(product.price)}</p>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            <Link
+              to={`/products/${product.slug}`}
+              className="rounded-full border border-text-brown/30 px-5 py-2 text-sm transition-colors hover:bg-cream-dark"
+            >
+              לפרטים
+            </Link>
+            {showAddToCart && (
+              <button
+                type="button"
+                onClick={() => addItem(product)}
+                className="rounded-full bg-text-brown px-5 py-2 text-sm text-cream transition-opacity hover:opacity-90"
+              >
+                הוסף לסל
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </article>
   )
 }

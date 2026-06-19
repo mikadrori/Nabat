@@ -6,28 +6,20 @@ export function CartIcon({ className }: CartIconProps) {
   return (
     <svg
       className={className}
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
+      width="38"
+      height="38"
+      viewBox="0 0 38 38"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
       <path
-        d="M7 5H20.5L19 13H8.5L7 5Z"
+        d="M1.58334 1.58331H7.91668L12.16 22.7841C12.3048 23.5131 12.7014 24.1679 13.2803 24.634C13.8592 25.1 14.5836 25.3476 15.3267 25.3333H30.7167C31.4597 25.3476 32.1841 25.1 32.7631 24.634C33.342 24.1679 33.7386 23.5131 33.8833 22.7841L36.4167 9.49998H9.50001M15.8333 33.25C15.8333 34.1244 15.1245 34.8333 14.25 34.8333C13.3756 34.8333 12.6667 34.1244 12.6667 33.25C12.6667 32.3755 13.3756 31.6666 14.25 31.6666C15.1245 31.6666 15.8333 32.3755 15.8333 33.25ZM33.25 33.25C33.25 34.1244 32.5411 34.8333 31.6667 34.8333C30.7922 34.8333 30.0833 34.1244 30.0833 33.25C30.0833 32.3755 30.7922 31.6666 31.6667 31.6666C32.5411 31.6666 33.25 32.3755 33.25 33.25Z"
         stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7 5L6 3H3"
-        stroke="currentColor"
-        strokeWidth="1.75"
+        strokeWidth="5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="10" cy="18.5" r="1.5" fill="currentColor" />
-      <circle cx="17" cy="18.5" r="1.5" fill="currentColor" />
     </svg>
   )
 }

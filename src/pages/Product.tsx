@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { orangeBg } from '../assets/svg'
 import { PageContainer } from '../components/layout/PageContainer'
 import { PageGrid } from '../components/layout/PageGrid'
 import { StorySection } from '../components/product/StorySection'
@@ -125,7 +124,7 @@ export function Product() {
         </section>
       )}
 
-      <StorySection title="למה נבט?" bgImage={orangeBg}>
+      <StorySection title="למה נבט?" band="orange">
         <p>
           למדנו לפחד מסוכר כאילו הוא האויב. החלטנו להפסיק להילחם בגוף ולייצר סוכרייה שמחזירה את
           המתיקות לשגרה, בלי רגשות אשם.

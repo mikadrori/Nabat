@@ -22,7 +22,7 @@ export function CartDrawer() {
   const shippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100)
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-start">
+    <div className="fixed inset-0 z-[60] flex justify-start">
       <button
         type="button"
         className="absolute inset-0 bg-black/40"

@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { darkCreamBg } from '../assets/svg'
 import { BandSection } from '../components/layout/BandSection'
 import { PageContainer } from '../components/layout/PageContainer'
 import { PageGrid } from '../components/layout/PageGrid'
@@ -34,7 +33,7 @@ export function Shop() {
   }, [activeFilter])
 
   return (
-    <BandSection bgImage={darkCreamBg} className="py-16 md:py-20">
+    <BandSection band="darkCream" className="py-16 md:py-20">
       <PageContainer>
         <PageGrid className="mb-10">
           <h1 className="font-display col-span-6 text-[clamp(2.5rem,5vw,4rem)] text-text-brown">
