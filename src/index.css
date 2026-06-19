@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@import "./styles/fonts.css";
+
+@theme {
+  --color-cream: #fcf7ee;
+  --color-cream-dark: #e5dfd1;
+  --color-text-brown: #6f5e4c;
+  --color-saffron: #d99f6d;
+  --color-saffron-band: #d99f6d;
+  --color-natural: #8fa68a;
+  --color-natural-band: #8fa68a;
+  --color-rose: #c48c9c;
+  --color-rose-band: #c48c9c;
+  --color-nav-green: #8fa68a;
+  --color-nav-text: #fcf7ee;
+  --font-serif: "Fedra Serif H+L", Georgia, "Times New Roman", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  color: var(--color-text-brown);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  font-synthesis: style;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.font-body {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
