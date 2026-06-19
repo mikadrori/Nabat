@@ -14,13 +14,13 @@ export function ProductVisual({
   overlayClassName,
   shapeClassName,
 }: ProductVisualProps) {
-  const overlay = product.cardOverlay ?? product.image
+  const overlay = product.image
 
   return (
     <div className={cn('relative flex items-end justify-center', className)}>
-      {product.cardShape && (
+      {product.crystalBg && (
         <img
-          src={product.cardShape}
+          src={product.crystalBg}
           alt=""
           aria-hidden="true"
           className={cn('w-full object-contain', shapeClassName)}
