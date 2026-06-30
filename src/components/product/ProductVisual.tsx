@@ -14,28 +14,24 @@ export function ProductVisual({
   overlayClassName,
   shapeClassName,
 }: ProductVisualProps) {
-  const overlay = product.cardOverlay ?? product.image
-
   return (
     <div className={cn('relative flex items-end justify-center', className)}>
-      {product.cardShape && (
+      {product.crystalBg && (
         <img
-          src={product.cardShape}
+          src={product.crystalBg}
           alt=""
           aria-hidden="true"
           className={cn('w-full object-contain', shapeClassName)}
         />
       )}
-      {overlay && (
-        <img
-          src={overlay}
-          alt={product.name}
-          className={cn(
-            'absolute bottom-[6%] left-1/2 w-[68%] max-w-[280px] -translate-x-1/2 object-contain',
-            overlayClassName,
-          )}
-        />
-      )}
+      <img
+        src={product.image}
+        alt={product.name}
+        className={cn(
+          'absolute bottom-[6%] left-1/2 w-[68%] max-w-[280px] -translate-x-1/2 object-contain',
+          overlayClassName,
+        )}
+      />
     </div>
   )
 }
