@@ -12,7 +12,7 @@ export function OrderSuccess() {
         <p className="mt-4 font-book text-lg text-text-brown/80">
           מספר הזמנה: <span className="font-display">{orderNumber}</span>
         </p>
-        <p className="mt-2 text-text-brown/60">זוהי הזמנת דמו — לא בוצע חיוב.</p>
+        <p className="mt-2 text-text-brown/60">זוהי הזמנת דמו - לא בוצע חיוב.</p>
         <Link
           to="/shop"
           className="mt-8 inline-block rounded-full bg-text-brown px-8 py-3 text-cream hover:opacity-90"

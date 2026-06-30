@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { PageContainer } from '../components/layout/PageContainer'
-import { PageGrid } from '../components/layout/PageGrid'
 import { formatPrice } from '../lib/cn'
 
 export function Checkout() {
@@ -33,10 +32,9 @@ export function Checkout() {
   return (
     <section className="py-16">
       <PageContainer>
-        <PageGrid className="gap-y-12">
-          <form onSubmit={handleSubmit} className="col-span-6 space-y-6 lg:col-span-3 lg:col-start-4">
+        <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-12 lg:grid-cols-[2fr_1fr]">
+          <form onSubmit={handleSubmit} className="order-2 space-y-6 lg:order-1">
           <h1 className="font-display text-4xl">תשלום</h1>
-          <p className="text-sm text-text-brown/60">תשלום לדוגמה — ללא חיוב אמיתי</p>
 
           {error && <p className="text-rose">{error}</p>}
 
@@ -106,7 +104,7 @@ export function Checkout() {
           </button>
         </form>
 
-          <aside className="col-span-6 h-fit rounded-3xl bg-cream-dark/50 p-8 lg:col-span-3 lg:col-start-1">
+          <aside className="order-1 h-fit rounded-3xl bg-cream-dark/50 p-8 lg:order-2">
           <h2 className="font-display mb-6 text-2xl">סיכום הזמנה</h2>
           <ul className="space-y-4 border-b border-cream-dark pb-6">
             {items.map((item) => (
@@ -114,26 +112,26 @@ export function Checkout() {
                 <span>
                   {item.name} × {item.quantity}
                 </span>
-                <span>{formatPrice(item.price * item.quantity)}</span>
+                <span className="font-price">{formatPrice(item.price * item.quantity)}</span>
               </li>
             ))}
           </ul>
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span>סה״כ ביניים</span>
-              <span>{formatPrice(subtotal)}</span>
+              <span className="font-price">{formatPrice(subtotal)}</span>
             </div>
             <div className="flex justify-between">
               <span>משלוח</span>
-              <span>{shipping === 0 ? 'חינם' : formatPrice(shipping)}</span>
+              <span className="font-price">{shipping === 0 ? 'חינם' : formatPrice(shipping)}</span>
             </div>
-            <div className="flex justify-between font-book text-lg">
+            <div className="flex justify-between text-lg">
               <span>סה״כ</span>
-              <span>{formatPrice(total)}</span>
+              <span className="font-price">{formatPrice(total)}</span>
             </div>
           </div>
         </aside>
-        </PageGrid>
+        </div>
       </PageContainer>
     </section>
   )

@@ -1,17 +1,38 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { orangeBg } from '../assets/svg'
 import { PageContainer } from '../components/layout/PageContainer'
 import { PageGrid } from '../components/layout/PageGrid'
-import { StorySection } from '../components/product/StorySection'
+import { ProductImageCarousel } from '../components/product/ProductImageCarousel'
+import { SuggestedProductsSection } from '../components/product/SuggestedProductsSection'
+import { MinusIcon, PlusIcon } from '../components/ui/QuantityIcons'
 import { useCart } from '../context/CartContext'
 import {
-  accentBgImage,
+  accentBgClass,
   accentTextClass,
+  bagSortIndex,
   getProductBySlug,
+  getProductDisplayTitles,
+  getProductSizeLabel,
+  getSuggestedProducts,
+  mugSortIndex,
   products,
+  type AccentColor,
+  type ProductCategory,
 } from '../data/products'
 import { cn, formatPrice } from '../lib/cn'
+
+const accentOrder: AccentColor[] = ['saffron', 'natural', 'rose']
+
+function getCategoryVariants(category: ProductCategory) {
+  const items = products.filter((p) => p.category === category)
+  if (category === 'bag') {
+    return items.sort((a, b) => bagSortIndex(a.id) - bagSortIndex(b.id))
+  }
+  if (category === 'mug') {
+    return items.sort((a, b) => mugSortIndex(a.id) - mugSortIndex(b.id))
+  }
+  return items.sort((a, b) => accentOrder.indexOf(a.accentColor) - accentOrder.indexOf(b.accentColor))
+}
 
 export function Product() {
   const { slug } = useParams()
@@ -21,149 +42,159 @@ export function Product() {
 
   if (!product) return <Navigate to="/shop" replace />
 
-  const related = products
-    .filter((p) => p.id !== product.id && (p.accentColor === product.accentColor || p.category !== product.category))
-    .slice(0, 2)
-
-  const candyProducts = products.filter((p) => p.category === 'candy')
+  const variants = getCategoryVariants(product.category)
+  const { mainTitle, subtitle } = getProductDisplayTitles(product)
+  const sizeLabel = getProductSizeLabel(product)
+  const suggestedProducts = useMemo(() => getSuggestedProducts(product), [product.id])
 
   return (
     <>
-      <section className="sticky top-[82px] z-30 border-b border-cream-dark bg-cream/95 py-6 backdrop-blur">
+      <section className="bg-cream py-12 md:py-16">
         <PageContainer>
-          <PageGrid className="gap-y-10">
-            <div className="col-span-6 flex items-center justify-center bg-cream-dark/40 p-8 md:col-span-3 md:col-start-1">
-              <img src={product.image} alt={product.name} className="max-h-[420px] object-contain" />
-            </div>
-            <div className="col-span-6 flex flex-col justify-center md:col-span-3 md:col-start-4">
-            <p className="text-[1.25rem] text-text-brown/60">{product.tagline}</p>
-            <h1
-              className={cn(
-                'font-display mt-2 text-[clamp(2.5rem,5vw,4rem)]',
-                accentTextClass[product.accentColor],
-              )}
+          <Link
+            to="/shop"
+            className="font-book mb-10 inline-flex w-fit items-center gap-2 ms-auto text-[1.125rem] text-text-brown no-underline transition-[opacity,font-weight] hover:font-medium-weight hover:underline hover:underline-offset-4"
+          >
+            לכל המוצרים
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              className="h-4 w-4 shrink-0"
             >
-              {product.name}
-            </h1>
-            {product.flavorLabel && (
-              <p className="mt-2 text-xl text-text-brown">{product.flavorLabel}</p>
-            )}
-            <p className="mt-4 text-2xl">{formatPrice(product.price)}</p>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-text-brown/80">
-              {product.description}
-            </p>
-            <ul className="mt-4 space-y-1 text-text-brown/70">
-              {product.features.map((feature) => (
-                <li key={feature}>• {feature}</li>
-              ))}
-            </ul>
-            <div className="mt-8 flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-text-brown/30"
+              <path
+                d="M15 18l-6-6 6-6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+
+          <PageGrid className="items-start gap-y-10">
+            <div className="col-span-6 flex flex-col items-center md:col-span-3 md:col-start-1">
+              <div className="w-full max-w-md">
+                {product.galleryImages ? (
+                  <ProductImageCarousel images={product.galleryImages} alt={product.name} />
+                ) : (
+                  <>
+                    <div className="relative flex h-[420px] w-full items-center justify-center">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className={cn(
+                          'object-contain',
+                          product.category === 'candy'
+                            ? 'max-h-[300px] max-w-[240px] w-full'
+                            : 'h-full w-full px-12',
+                        )}
+                      />
+                    </div>
+                    <div className="mt-4 h-2" aria-hidden="true" />
+                  </>
+                )}
+                <div
+                  className="mt-6 flex items-center justify-center gap-6"
+                  dir={product.category === 'bag' || product.category === 'mug' ? 'rtl' : 'ltr'}
                 >
-                  −
-                </button>
-                <span className="min-w-[2rem] text-center">{quantity}</span>
-                <button
-                  type="button"
-                  onClick={() => setQuantity((q) => q + 1)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-text-brown/30"
-                >
-                  +
-                </button>
+                  {variants.map((variant) => (
+                    <Link
+                      key={variant.id}
+                      to={`/products/${variant.slug}`}
+                      aria-label={variant.name}
+                      aria-current={variant.id === product.id ? 'true' : undefined}
+                      className={cn(
+                        'h-5 w-5 rounded-full transition-transform hover:scale-110 md:h-6 md:w-6',
+                        accentBgClass[variant.accentColor],
+                        variant.id === product.id &&
+                          'ring-2 ring-text-brown ring-offset-2 ring-offset-cream',
+                      )}
+                    />
+                  ))}
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => addItem(product, quantity)}
-                className="rounded-full bg-text-brown px-8 py-3 text-cream transition-opacity hover:opacity-90"
-              >
-                הוסף לסל
-              </button>
             </div>
+            <div className="col-span-6 flex flex-col md:col-span-3 md:col-start-4 md:-mt-4">
+              <div className="shrink-0">
+                <h1 className="font-display text-[clamp(1.5rem,2.75vw,2.25rem)] leading-tight text-text-brown">
+                  {mainTitle}
+                </h1>
+                <p
+                  className={cn(
+                    'font-display mt-1 text-[clamp(1.125rem,2vw,1.5rem)] leading-none',
+                    subtitle
+                      ? product.category === 'bag'
+                        ? 'text-text-brown'
+                        : accentTextClass[product.accentColor]
+                      : 'invisible',
+                  )}
+                  aria-hidden={!subtitle}
+                >
+                  {subtitle ?? '-'}
+                </p>
+                <p className="font-price mt-2 text-[clamp(1.125rem,2vw,1.5rem)] leading-normal">
+                  {formatPrice(product.price)}
+                </p>
+                {sizeLabel && (
+                  <p className="font-book mt-1 text-sm text-text-brown/60">{sizeLabel}</p>
+                )}
+              </div>
+              <div className="mt-8 min-h-[12rem] shrink-0">
+                <p className="max-w-md font-book text-lg leading-relaxed text-text-brown/80">
+                  {product.description}
+                </p>
+                <ul className="mt-3 space-y-1 font-book text-text-brown/70">
+                  {product.features.map((feature) => (
+                    <li key={feature}>• {feature}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-4 shrink-0">
+                <div className="flex w-32 max-w-full flex-col gap-4">
+                <div className="flex w-full items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    aria-label="הפחת כמות"
+                    className="text-text-brown transition-opacity hover:opacity-70"
+                  >
+                    <MinusIcon />
+                  </button>
+                  <span className="font-price text-center text-[1.75rem] leading-none tabular-nums">
+                    {quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => q + 1)}
+                    aria-label="הוסף כמות"
+                    className="text-text-brown transition-opacity hover:opacity-70"
+                  >
+                    <PlusIcon />
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => addItem(product, quantity)}
+                  className="w-full rounded-full bg-text-brown px-4 py-3 font-book text-[1.0625rem] tracking-[0.08em] text-cream transition-opacity hover:opacity-90"
+                >
+                  הוספה לסל
+                </button>
+                </div>
+              </div>
             </div>
           </PageGrid>
         </PageContainer>
       </section>
 
-      {product.category === 'candy' && (
-        <section className="py-16">
-          <PageContainer>
-            <PageGrid className="mb-10">
-              <h2 className="font-display col-span-6 text-[clamp(2rem,4vw,3rem)]">
-                סוכר אחד, שלוש חוויות
-              </h2>
-            </PageGrid>
-            <PageGrid>
-              {candyProducts.map((candy) => (
-                <div key={candy.id} className="col-span-6 md:col-span-2">
-                <Link
-                  to={`/products/${candy.slug}`}
-                  className={cn(
-                    'relative block overflow-hidden transition-transform hover:scale-[1.02]',
-                    candy.slug === product.slug && 'ring-4 ring-cream ring-offset-2 ring-offset-cream',
-                  )}
-                >
-                  <img
-                    src={accentBgImage[candy.accentColor]}
-                    alt=""
-                    className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
-                    aria-hidden="true"
-                  />
-                  <div className="relative z-10 p-8 text-cream">
-                    <h3 className="font-display text-3xl">{candy.name}</h3>
-                    <p className="mt-2 font-book opacity-90">{candy.flavorLabel}</p>
-                    <p className="mt-4 font-book text-xl">{formatPrice(candy.price)}</p>
-                  </div>
-                </Link>
-                </div>
-              ))}
-            </PageGrid>
-          </PageContainer>
-        </section>
-      )}
+      <SuggestedProductsSection products={suggestedProducts} />
 
-      <StorySection title="למה נבט?" bgImage={orangeBg}>
-        <p>
-          למדנו לפחד מסוכר כאילו הוא האויב. החלטנו להפסיק להילחם בגוף ולייצר סוכרייה שמחזירה את
-          המתיקות לשגרה, בלי רגשות אשם.
-        </p>
-      </StorySection>
-
-      {related.length > 0 && (
-        <section className="py-16">
-          <PageContainer>
-            <PageGrid className="mb-8">
-              <h2 className="font-display col-span-6 text-3xl">השלימו את הסט</h2>
-            </PageGrid>
-            <PageGrid>
-              {related.map((item) => (
-                <div key={item.id} className="col-span-6 sm:col-span-3">
-                <Link
-                  to={`/products/${item.slug}`}
-                  className="flex items-center gap-4 rounded-2xl bg-cream-dark/50 p-4 transition-colors hover:bg-cream-dark"
-                >
-                  <img src={item.image} alt={item.name} className="h-24 w-20 object-contain" />
-                  <div>
-                    <p className="font-display text-xl">{item.name}</p>
-                    <p className="font-book text-text-brown/70">{formatPrice(item.price)}</p>
-                  </div>
-                </Link>
-                </div>
-              ))}
-            </PageGrid>
-          </PageContainer>
-        </section>
-      )}
-
-      <section className="border-t border-cream-dark py-12">
+      <section className="border-t border-cream-dark bg-cream py-12 md:py-16">
         <PageContainer className="text-center">
           <p className="font-book text-2xl">★★★★★ 4.9</p>
-          <p className="mt-2 text-text-brown/70">מבוסס על 128 ביקורות</p>
-          <blockquote className="mx-auto mt-8 max-w-xl text-lg italic text-text-brown/80">
-            "סוף סוף מתיקות שמרגישה נקייה. הזעפרן בקפה — חוויה שלמה."
+          <p className="mt-2 font-book text-text-brown/70">מבוסס על 128 ביקורות</p>
+          <blockquote className="mx-auto mt-8 max-w-xl font-book text-lg italic text-text-brown/80">
+            "סוף סוף מתיקות שמרגישה נקייה. הזעפרן בקפה - חוויה שלמה."
           </blockquote>
         </PageContainer>
       </section>

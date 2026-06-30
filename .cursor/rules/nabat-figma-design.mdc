@@ -1,10 +1,10 @@
 ---
-description: Nabat brand source of truth — Figma design, assets, and implementation conventions
+description: Nabat brand source of truth - Figma design, assets, and implementation conventions
 globs:
 alwaysApply: true
 ---
 
-# Nabat project — design source of truth
+# Nabat project - design source of truth
 
 ## Figma file
 
@@ -14,7 +14,7 @@ alwaysApply: true
 - **Nav:** node `10:89`
 - **Product grid:** node `9:68`
 
-When implementing or updating UI, use the **Figma MCP plugin** (`get_design_context`, `get_screenshot`, `download_assets`) against these nodes. Adapt output to this codebase — do not paste absolute-positioned generated code verbatim.
+When implementing or updating UI, use the **Figma MCP plugin** (`get_design_context`, `get_screenshot`, `download_assets`) against these nodes. Adapt output to this codebase - do not paste absolute-positioned generated code verbatim.
 
 ## Brand assets
 
@@ -41,4 +41,4 @@ Product photography (PNG) remains in `src/assets/figma/` until replaced.
 
 ## Stack
 
-Vite + React + TypeScript + Tailwind CSS + React Router. Mock cart/checkout only — no real payments.
+Vite + React + TypeScript + Tailwind CSS + React Router. Mock cart/checkout only - no real payments.
