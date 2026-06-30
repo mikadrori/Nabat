@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { HomeLink } from './HomeLink'
 import { logo, logotype } from '../../assets/svg'
 import { useCart } from '../../context/CartContext'
@@ -93,14 +93,13 @@ export function Header() {
                   : item.isActive(pathname, hash)
 
               return (
-                <NavLink
+                <Link
                   key={item.to}
                   ref={(el) => {
                     linkRefs.current[item.to] = el
                   }}
                   to={item.to}
                   className={navLinkClass(active)}
-                  isActive={() => false}
                   onClick={() => {
                     if (item.to === '/shop' && pathname === '/shop') {
                       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -108,7 +107,7 @@ export function Header() {
                   }}
                 >
                   {item.label}
-                </NavLink>
+                </Link>
               )
             })}
 
